@@ -4,8 +4,8 @@ import React from 'react'
 const SignIn = () => {
   return (
     <SignInButton >
-      <button className='text-sm font-semibold hover:text-darkColor text-lightColor hover:cursor-pointer hoverEffect'>
-        Login
+      <button className='text-sm font-bold hover:text-darkColor text-myColor_red hover:cursor-pointer hoverEffect'>
+        התחברות
       </button>
       </SignInButton>
   )

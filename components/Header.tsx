@@ -1,35 +1,28 @@
+'use client';
 import React from "react";
 import Container from "./Container";
-import HeaderMenu from "./HederMenu";
+import dynamic from "next/dynamic";
+
+const HeaderMenu = dynamic(() => import("./HeaderMenu"), { ssr: false });
+
 import Logo from "./Logo";
-import SearchBar from "./SearchBar";
-import CardIcon from "./CartIcon";
-import FavoriteButton from "./FavoriteButton";
-import SignIn from "./SignIn";
 import MobilMenu from "./MobilMenu";
+const HeaderAuth = dynamic(() => import("./HeaderAuth"), { ssr: false });
 
-
-const Header = async () => {
-  // const user = await currentUser();
-
+const Header = () => {
   return (
     <header className="bg-white py-5 border-b border-b-black/20">
-      <Container className="flex items-center justify-between text-lightColor ">
+      <Container className="flex items-center justify-between text-lightColor">
         <div className="w-auto md:w-1/3 flex items-center gap-2.5 justify-start md:gap-0">
           <MobilMenu />
-          <Logo logoSrc={'/logo.png'}/>
+          <Logo logoSrc={"/logo.webp"} />
         </div>
 
         <HeaderMenu />
+
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-8 p-1">
-          <SearchBar />
-          <CardIcon />
-          <FavoriteButton />
+          <HeaderAuth />
         </div>
-       
-          
-          {/* {!user && <SignIn />} */}
-      
       </Container>
     </header>
   );

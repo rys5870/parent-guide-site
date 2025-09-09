@@ -1,16 +1,23 @@
 @import "tailwindcss";
 
+@tailwind utilities;
+@import "flowbite";
+@plugin "flowbite-react/plugin/tailwindcss";
+
+/* Flowbite styles */
+@import "flowbite";
+@source "../.flowbite-react/class-list.json";
 
 @custom-variant dark (&:is(.dark *));
 
-@theme{
+@theme {
   --font-poppins: Poppins, sans-serif;
-  --color-shop-light-pink:#fcf0e4;
-  --color-shop_dark_green:#063c28;
-  --color-shop_btn_dark_green:#063D29;
-  --color-shop_light_bg:#f6f6f6;
-  --color-shop_light_green:#3b9c3c;
-  --color-shop_orange:#fb6c08;
+  --color-shop-light-pink: #fcf0e4;
+  --color-shop_dark_green: #063c28;
+  --color-shop_btn_dark_green: #063d29;
+  --color-shop_light_bg: #f6f6f6;
+  --color-shop_light_green: #3b9c3c;
+  --color-shop_orange: #fb6c08;
   --color-darkColor: #151515;
   --color-lightColor: #52525b;
   --color-lightOrange: #fca99c;
@@ -18,6 +25,9 @@
   --color-myColor_red: #d32035;
   --color-myColor_orange: #ee6032;
 
+  --color-Color_pink: #F8B4D9;
+  --color-Color_red: #F8B4B4;
+  --color-Color_orange: #FDBA8C;
 }
 
 @theme inline {
@@ -135,9 +145,30 @@
     @apply bg-background text-foreground;
   }
   .hoverEffect {
-    @apply transition-all duration-300 ease-in-out ;
+    @apply transition-all duration-300 ease-in-out;
   }
-  button{
+  button {
     @apply hover:cursor-pointer;
   }
+}
+
+.cloud-shape {
+  border-radius: 50% 50% 20% 40% / 60% 60% 40% 40%;
+  border: 6px solid #aee1f9;
+  background: linear-gradient(to bottom right, #ffffff, #f0f9ff);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(400px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 2s ease-out forwards;
 }

@@ -1,6 +1,4 @@
-import { log } from 'console'
 import { Clock, Mail, Map, Phone } from 'lucide-react'
-import { title } from 'process'
 import React from 'react'
 interface ContactItemData{
      title:string,
@@ -9,7 +7,7 @@ interface ContactItemData{
 }
 const data: ContactItemData[] =[
     {
-        title:"Working Hours",
+        title:"שעות פתיחה",
         subtitle:"Mon - Sat: 10:00 AM - 7:00PM",
         icon:(
             <Clock className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors"/>
@@ -17,7 +15,7 @@ const data: ContactItemData[] =[
         ),
     },
     {
-        title:"Email Us",
+        title:"שלח מייל",
         subtitle:"Shopcart@gmail.com",
         icon:(
             <Mail className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors"/>
@@ -25,16 +23,16 @@ const data: ContactItemData[] =[
         ),
     },
      {
-        title:"Call Us",
-        subtitle:"+972 123 123 123",
+        title:"התקשר אלינו",
+        subtitle:"050-1234567",
         icon:(
             <Phone className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors"/>
 
         ),
     },
      {
-        title:"Visit Us",
-        subtitle:"Bnei-brak",
+        title:"בקרו אותנו",
+        subtitle:"אברבנאל בני ברק",
         icon:(
             <Map className="h-6 w-6 text-gray-600 group-hover:text-primary transition-colors"/>
 

@@ -7,8 +7,8 @@ import { productType } from '@/constants/data';
 
 
 const ProductGrid = () => {
-  const [product,setProduct]=useState([]);
-const [loading,setLoading]=useState(false);
+//   const [product,setProduct]=useState([]);
+// const [loading,setLoading]=useState(false);
 const [selectedTab,setSelectedTab]=useState(productType[0]?.title || "");
   return (
     <div>

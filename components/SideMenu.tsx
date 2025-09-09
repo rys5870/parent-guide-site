@@ -1,55 +1,67 @@
+'use client';
 import React, { FC } from "react";
 import Logo from "./Logo";
 import { X } from "lucide-react";
-import Link from "next/link";
-import { headerData } from "@/constants/data";
 import { usePathname } from "next/navigation";
 import SocialMedia from "./SocialMedia";
 import { useOutsideClick } from "@/hooks";
+import { useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { useFilteredLinks } from "@/hooks/useFilteredLinks";
 
-interface sideBarProps {
+interface SideBarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SideMenu: FC<sideBarProps> = ({ isOpen, onClose }) => {
+const SideMenu: FC<SideBarProps> = ({ isOpen, onClose }) => {
   const pathname = usePathname();
   const sidebarRef = useOutsideClick<HTMLDivElement>(onClose);
 
+const { user, isLoaded } = useUser();
+const filteredLinks = useFilteredLinks(user, isLoaded);
+
+  if (!isLoaded) return null;
+
   return (
     <div
-      className={`fixed inset-y-0 h-screen left-0 z-50 w-full
-         bg-myColor_red text-white/80 shadow-xl ${
-           isOpen ? " translate-x-0" : "-translate-x-full"
-         } hoverEffect`}
+      className={`fixed inset-y-0 h-screen left-0 z-50 
+        bg-myColor_red text-white/80 shadow-xl transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
     >
       <div
         ref={sidebarRef}
-        className="min-w-72 max-w-96 bg-myColor_red h-screen p-10
-         border-r border-r-myColor_red flex flex-col gap-6"
+        className="min-w-72 max-w-96 bg-gradient-to-l from-Color_red to-Color_pink h-screen p-10
+        border-r border-myColor_red flex flex-col gap-6"
       >
         <div className="flex items-center justify-between gap-5">
-          <Logo logoSrc={'/logo.png'} className="text-white" />
           <button
             onClick={onClose}
-            className="hover:text-myColor_red hoverEffect"
+            className="hover:text-myColor_red transition-colors"
           >
             <X />
           </button>
+          <div className="bg-amber-50 rounded-2xl">
+            <Logo logoSrc="/logo.webp" className="text-white" />
+          </div>
         </div>
-        <div className="flex flex-col space-y-3.5 font-semibold tracking-wide">
-          {headerData.map((item) => (
+
+        <nav className="flex flex-col space-y-3.5 font-semibold tracking-wide">
+          {filteredLinks.map((item, index) => (
             <Link
-              key={item?.title}
-              href={item?.href}
-              className={`hover:text-myColor_red hoverEffect ${
-                pathname === item?.href && "text-white"
+              key={index}
+              href={item.href}
+              onClick={onClose}
+              className={`hover:text-myColor_red transition-colors ${
+                pathname === item.href ? "text-white" : ""
               }`}
             >
-              {item?.title}
+              {item.title}
             </Link>
           ))}
-        </div>
+        </nav>
+
         <SocialMedia />
       </div>
     </div>
