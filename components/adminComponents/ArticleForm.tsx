@@ -42,10 +42,38 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
 
   const validate = () => {
     const errs: string[] = [];
-    if (!title.trim()) errs.push('יש להזין כותרת');
-    if (showCategorySelect && !category?._id) errs.push('יש לבחור קטגוריה');
-    if (!image.trim()) errs.push('יש להעלות תמונה');
-    if (sections.length === 0) errs.push('יש להוסיף לפחות קטע אחד');
+
+    if (!title.trim()) {
+      errs.push('יש להזין כותרת');
+    } else if (title.trim().length < 5) {
+      errs.push('הכותרת חייבת להכיל לפחות 5 תווים');
+    }
+
+    if (showCategorySelect && !category?._id) {
+      errs.push('יש לבחור קטגוריה');
+    }
+
+    if (!image.trim()) {
+      errs.push('יש להעלות תמונה');
+    }
+
+    if (sections.length === 0) {
+      errs.push('יש להוסיף לפחות קטע אחד');
+    }
+
+    sections.forEach((sec, i) => {
+      const content = sec.content.trim();
+      const title = sec.title?.trim();
+
+      if (content.length < 10) {
+        errs.push(`קטע מספר ${i + 1} חייב להכיל לפחות 10 תווים בתוכן`);
+      }
+
+      if (title && title.length < 2) {
+        errs.push(`כותרת הקטע מספר ${i + 1} חייבת להכיל לפחות 2 תווים`);
+      }
+    });
+
     return errs;
   };
 
@@ -61,7 +89,7 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
     const payload: ArticleInput = {
       title: title.trim(),
       image: image.trim(),
-      categoryId: category!._id, // ⚠️ השתנה מ-category ל-categoryId
+      categoryId: category!._id,
       sections: sections
         .filter(sec => sec.content.trim() !== '')
         .map(({ title = '', content, icon = '' }) => ({
@@ -73,11 +101,12 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
 
     console.log('📦 Sending payload:', payload);
     onSubmit(payload);
-     setTitle('');
-  setImage('');
-  setCategory(null);
-  setSections([]);
-  setErrors([]);
+
+    setTitle('');
+    setImage('');
+    setCategory(null);
+    setSections([]);
+    setErrors([]);
   };
 
   const updateSection = (index: number, field: keyof Section, value: string) => {

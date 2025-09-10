@@ -67,7 +67,10 @@ if (favoriteParam === "true") {
     return NextResponse.json({ error: "שגיאה פנימית בשרת" }, { status: 500 });
   }
 }
+
 export async function POST(request: NextRequest) {
+  console.log('Received POST request to create article');
+  
   try {
     await ConnectDB();
 

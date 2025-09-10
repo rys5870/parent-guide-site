@@ -1,7 +1,7 @@
-import Podcasts from '@/components/Podcasts';
-import Container from '@/components/Container';
-import React from 'react';
-import TitleHeader from '@/components/TitleHeader';
+import Podcasts from "@/components/Podcasts";
+import Container from "@/components/Container";
+import React from "react";
+import TitleHeader from "@/components/TitleHeader";
 
 const page = () => {
   return (
@@ -22,14 +22,14 @@ const page = () => {
       </div>
 
       {/* כותרת */}
-      <TitleHeader title='🎙️ פודקאסטים'  subtitle="הורות בין דורות: להבין את הדפוסים, ולבחור מחדש"/>
-     
+      <TitleHeader
+        title="🎙️ פודקאסטים"
+        subtitle="הורות בין דורות: להבין את הדפוסים, ולבחור מחדש"
+      />
 
       {/* מיכל הפודקאסטים */}
       <Container>
-        <div className="w-full flex flex-col items-center">
-          <Podcasts />
-        </div>
+        <Podcasts />
       </Container>
     </div>
   );
