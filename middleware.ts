@@ -21,8 +21,10 @@ const isPublicRoute = createRouteMatcher([
   '/api/about(.*)',
   '/api/testimonial(.*)',
   '/api/categories(.*)',
+  '/api/submit-drawing(.*)',
   '/sign-in(.*)',
   '/sign-up(.*)',
+  '/drawing(.*)',
 ]);
 
 // נתיבים מנהליים
