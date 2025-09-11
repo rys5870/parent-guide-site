@@ -3,6 +3,7 @@ import Comment from './Comment';
 import axios from 'axios';
 
 type CommentProps ={
+  _id: string;
   comment: string;
   articleId: string;
   name: string;
@@ -33,9 +34,10 @@ const Comments: React.FC<CommentsProps> = ({id , refreshTrigger }) => {
   }, [id, refreshTrigger]);
   return (
     <div className='p-5 space-y-1.5'>
-{
-    comments.map((item,index)=>(
-        <Comment key={index} commenter={item.name}  articleId={item.articleId} content={item.comment} timestamp={item.timestamp} />
+{Array.isArray(comments) &&
+
+    comments.map((item)=>(
+        <Comment key={item._id} commenter={item.name}  articleId={item.articleId} content={item.comment} timestamp={item.timestamp} />
     ))
 }
     </div>
