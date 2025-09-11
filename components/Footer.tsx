@@ -49,9 +49,9 @@ const Footer: React.FC = () => {
           <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
             <div>
               <h4 className="text-lg font-semibold text-black mb-4">צור קשר</h4>
-              <p>📍 אברבנאל 12, בני ברק</p>
+              <p>📍 אברבנאל 123, בני ברק</p>
               <p>📞 050-1234567</p>
-              <p>✉️ shopcart@gmail.com</p>
+              <p>✉️ 1@dvoriravinski.co.il</p>
             </div>
             <div>
               <h4 className="text-lg font-semibold text-black mb-4">

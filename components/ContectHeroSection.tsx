@@ -8,7 +8,7 @@ const ContectHeroSection = () => {
       <div className="md:col-span-1 flex justify-center md:justify-start">
         <div className="relative w-48 h-48 rounded-xl shadow-md overflow-hidden">
           <Image
-            src="/images/coach-watercolor.jpg"
+            src="/profile.png"
             alt="מדריכת הורים"
             fill
             className="object-cover rounded-xl"

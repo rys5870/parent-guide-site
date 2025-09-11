@@ -60,12 +60,8 @@ const ArticleCard: React.FC<ArticleProps> = ({
           <div className="flex items-center ">
             <FaRegCalendarAlt className="text-lg" />
             <span>
-              {createdAt
-                ? new Date(createdAt).toLocaleDateString("he-IL", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })
+              {createdAt?
+                createdAt
                 : "תאריך לא זמין"}
             </span>
           </div>
