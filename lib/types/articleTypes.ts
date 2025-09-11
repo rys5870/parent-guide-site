@@ -24,3 +24,13 @@ export type ArticleInput = {
   categoryId: string;
   sections: Section[];
 };
+
+export type ArticleSummary = {
+  _id: string;
+  title: string;
+  image: string;
+  category: {
+    _id: string;
+    category: string;
+  };
+};

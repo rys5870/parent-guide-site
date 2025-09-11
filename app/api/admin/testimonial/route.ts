@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 // יצירת ציטוט חדש
 export async function POST(req: NextRequest) {
+
+  
   try {
     await ConnectDB();
     const body = await req.json();
@@ -11,10 +13,6 @@ export async function POST(req: NextRequest) {
 
     if (type !== "text" && type !== "image") {
       return NextResponse.json({ error: "type חייב להיות 'text' או 'image'" }, { status: 400 });
-    }
-
-    if (!name) {
-      return NextResponse.json({ error: "name חובה" }, { status: 400 });
     }
 
     if (type === "text" && !quote) {
@@ -45,6 +43,8 @@ export async function POST(req: NextRequest) {
 
 // עדכון ציטוט
 export async function PUT(req: NextRequest) {
+    console.log("put request received");
+
   try {
     await ConnectDB();
     const body = await req.json();
@@ -103,3 +103,4 @@ export async function GET() {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+

@@ -33,7 +33,7 @@ const SelectingCategories = ({ handleCategory }: SelectingCategoriesProps) => {
   }, []);
 
   const getButtonClass = (isSelected: boolean) =>
-    `bg-white text-myColor_red w-40 border-2 rounded-4xl px-4 py-2 transition-all duration-200 ${
+    `bg-white text-myColor_red border-2 rounded-4xl px-4 py-2 transition-all duration-200 ${
       isSelected
         ? "bg-myColor_pink text-white hover:bg-myColor_pink hover:text-white"
         : "hover:bg-white hover:text-black"
@@ -43,7 +43,7 @@ const SelectingCategories = ({ handleCategory }: SelectingCategoriesProps) => {
     <ul className="flex gap-5 flex-wrap justify-center p-5">
       <li key="all">
         <Button
-          size="icon"
+         
           className={getButtonClass(selectedButton === "all")}
           onClick={() => {
             handleCategory("");
@@ -58,7 +58,7 @@ const SelectingCategories = ({ handleCategory }: SelectingCategoriesProps) => {
         categories.map((cat) => (
           <li key={cat._id}>
             <Button
-              size="icon"
+             
               className={getButtonClass(selectedButton === cat.category)}
               onClick={() => {
                 handleCategory(cat._id);

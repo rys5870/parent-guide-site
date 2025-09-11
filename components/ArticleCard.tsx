@@ -48,7 +48,7 @@ const ArticleCard: React.FC<ArticleProps> = ({
       <div className="p-2 flex flex-col">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg md:text-xl font-bold text-myColor_red">{title}</h2>
-          <p className="h-[110px] text-gray-700 text-sm md:text-base line-clamp-4">{content}</p>
+          <p className="h-[100px] text-gray-700 leading-6 text-sm md:text-base line-clamp-4">{content}</p>
         </div>
 
         {/* זמן קריאה ותאריך */}

@@ -20,7 +20,7 @@ export default function AdminLayout({
         {/* למשל: תפריט צד */}
         <aside className=" bg-myColor_orange text-white flex flex-col p-4">
           <nav>
-            <Logo className=" hidden lg:block" logoSrc={"/logo.png"} />
+            <Logo className=" hidden lg:block" logoSrc={"/logo.webp"} />
             <ul>
               <li className="p-2 bg-myColor_orange hover:bg-orange-300">
                 <Link href="/admin">

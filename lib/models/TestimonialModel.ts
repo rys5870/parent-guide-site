@@ -4,15 +4,17 @@ const testimonialSchema = new mongoose.Schema({
   type: { type: String, enum: ["text", "image"], required: true },
 quote: { type: String },
 image: { type: String },
-  name: { type: String, required: true },
+  name: { type: String },
   details: { type: String },
   show: { type: Boolean, default: true },
 }, { timestamps: true });
 
 // וולידציה מותאמת אישית – חייב להיות quote או image
-testimonialSchema.pre("validate", function(next) {
-  if (!this.quote && !this.image) {
-    next(new Error("חייב להיות quote או image"));
+testimonialSchema.pre("validate", function (next) {
+  if (this.type === "text" && !this.quote) {
+    next(new Error("ציטוט טקסט חייב לכלול quote"));
+  } else if (this.type === "image" && !this.image) {
+    next(new Error("ציטוט תמונה חייב לכלול image"));
   } else {
     next();
   }

@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // יצירת ציטוט חדש
 export async function POST(req: NextRequest) {
+  
   try {
     await ConnectDB();
     const body = await req.json();
@@ -11,10 +12,6 @@ export async function POST(req: NextRequest) {
 
     if (type !== "text" && type !== "image") {
       return NextResponse.json({ error: "type חייב להיות 'text' או 'image'" }, { status: 400 });
-    }
-
-    if (!name) {
-      return NextResponse.json({ error: "name חובה" }, { status: 400 });
     }
 
     if (type === "text" && !quote) {
@@ -45,6 +42,7 @@ export async function POST(req: NextRequest) {
 
 // עדכון ציטוט
 export async function PUT(req: NextRequest) {
+
   try {
     await ConnectDB();
     const body = await req.json();
@@ -101,5 +99,31 @@ export async function GET() {
     const message = error instanceof Error ? error.message : "שגיאה בשרת";
     console.error("שגיאה בשליפה:", error);
     return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+export async function DELETE(req: NextRequest) {
+   const url = req.nextUrl;
+   
+  const  id  = url.pathname.split('/').pop(); // חילוץ מזהה מהנתיב
+
+  try {
+    await ConnectDB();
+
+    if (!id) {
+      return NextResponse.json({ error: "Missing testimonial ID" }, { status: 400 });
+    }
+
+    const deleted = await TestimonialModel.findByIdAndDelete(id);
+    if (!deleted) {
+      return NextResponse.json({ error: "לא נמצא ציטוט למחיקה" }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { success: true, message: "ההמלצה נמחקה בהצלחה" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("שגיאה במחיקה:", error);
+    return NextResponse.json({ error: "שגיאה בשרת" }, { status: 500 });
   }
 }

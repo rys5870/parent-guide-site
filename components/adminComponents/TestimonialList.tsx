@@ -1,15 +1,13 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import { TestimonialItem } from "./TestimonialItem";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import EditTestimonialModal from "./EditTestimonialModal";
 import { Testimonial } from "./TestimonialItem";
 import Link from "next/link";
 import { IoMdAddCircleOutline } from "react-icons/io";
-
-
 
 interface UpdateResponse {
   success: boolean;
@@ -41,15 +39,19 @@ export default function TestimonialList() {
   const handleToggleShow = async (id: string) => {
     try {
       setLoading(true);
-      const current = testimonials.find(t => t._id === id);
+      const current = testimonials.find((t) => t._id === id);
       if (!current) return;
 
-      const response = await axios.put<UpdateResponse>(`/api/admin/testimonial/${id}`, {
-        show: !current.show
-      });
+      const response = await axios.put<UpdateResponse>(
+        `/api/admin/testimonial`,
+        {
+          id,
+          show: !current.show,
+        }
+      );
 
-      setTestimonials(prev =>
-        prev.map(t => t._id === id ? response.data.testimonial : t)
+      setTestimonials((prev) =>
+        prev.map((t) => (t._id === id ? response.data.testimonial : t))
       );
       toast.success("הציטוט עודכן בהצלחה");
     } catch (err) {
@@ -64,7 +66,7 @@ export default function TestimonialList() {
     try {
       setLoading(true);
       await axios.delete(`/api/admin/testimonial/${id}`);
-      setTestimonials(prev => prev.filter(t => t._id !== id));
+      setTestimonials((prev) => prev.filter((t) => t._id !== id));
       toast.success("הציטוט נמחק בהצלחה");
     } catch (err) {
       console.error("שגיאה במחיקה:", err);
@@ -82,9 +84,15 @@ export default function TestimonialList() {
     if (!editing) return;
     try {
       setLoading(true);
-      const response = await axios.put<UpdateResponse>(`/api/admin/testimonial/${editing._id}`, updated);
-      setTestimonials(prev =>
-        prev.map(t => t._id === editing._id ? response.data.testimonial : t)
+      const response = await axios.put<UpdateResponse>(
+        `/api/admin/testimonial`,
+        {
+          id: editing._id,
+          ...updated,
+        }
+      );
+      setTestimonials((prev) =>
+        prev.map((t) => (t._id === editing._id ? response.data.testimonial : t))
       );
       toast.success("הציטוט עודכן בהצלחה");
       setEditing(null);
@@ -98,7 +106,7 @@ export default function TestimonialList() {
 
   return (
     <>
-     <Link
+      <Link
         className="inline-block mb-6 px-4 py-2 bg-myColor_pink text-white rounded-3xl hover:bg-myColor_red transition"
         href={"/admin/testimonial/add"}
       >
@@ -107,33 +115,34 @@ export default function TestimonialList() {
           <span className=" font-bold">הוספת המלצה</span>
         </div>
       </Link>
-    <div className="space-y-6 relative">
-      {editing && (
-        <EditTestimonialModal
-          testimonial={editing}
-          onClose={() => setEditing(null)}
-          onSave={handleSaveEdit}
-        />
-      )}
+      <div className="space-y-6 relative">
+        {editing && (
+          <EditTestimonialModal
+            testimonial={editing}
+            onClose={() => setEditing(null)}
+            onSave={handleSaveEdit}
+          />
+        )}
 
-      <ToastContainer position="top-center" autoClose={3000} rtl />
-      <h1 className="text-2xl font-bold">ציטוטים</h1>
+        <ToastContainer position="top-center" autoClose={3000} rtl />
+        <h1 className="text-2xl font-bold">ציטוטים</h1>
 
-      {loading && (
-        <div className="text-center text-blue-500 font-medium">טוען...</div>
-      )}
+        {loading && (
+          <div className="text-center text-blue-500 font-medium">טוען...</div>
+        )}
 
-      {!loading && testimonials.map((t) => (
-        <TestimonialItem
-          key={t._id}
-          testimonial={t}
-          onToggleShow={handleToggleShow}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          isAdmin={isAdmin}
-        />
-      ))}
-    </div>
+        {!loading &&
+          testimonials.map((t) => (
+            <TestimonialItem
+              key={t._id}
+              testimonial={t}
+              onToggleShow={handleToggleShow}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              isAdmin={isAdmin}
+            />
+          ))}
+      </div>
     </>
   );
 }
