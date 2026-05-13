@@ -1,3 +1,4 @@
+# מומלץ להעביר NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ל־build (כלומר בקובץ .env בעת הרצת compose מתיקייה זו או עם --env-file).
 services:
   mongo:
     image: mongo:7
@@ -18,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-pk_test_build_placeholder}
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-}
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -27,7 +28,7 @@ services:
       HOSTNAME: 0.0.0.0
       PORT: 3000
       MONGODB_URI: ${MONGODB_URI:-mongodb://mongo:27017/parent-guide}
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-pk_test_placeholder}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-}
       CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:-}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
     depends_on:

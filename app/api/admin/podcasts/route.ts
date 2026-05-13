@@ -3,10 +3,6 @@ import { ConnectDB } from "@/lib/mongodb";
 import mongoose from "mongoose";
 import PodcastsModel from "@/lib/models/PodcastsModel";
 
-const LoadDB = async()=>{
-    await ConnectDB();
-}
-LoadDB();
 // 📥 GET – שליפה
 export async function GET(request: NextRequest) {
   try {

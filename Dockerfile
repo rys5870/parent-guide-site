@@ -16,8 +16,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_build_placeholder
+# חייב להיות מפתח תקף מ־Clerk (אותו NEXT_PUBLIC שבפרודקשן) — לא placeholder, אחרת next build נופל.
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+# מניעת כשלון "MONGODB_URI לא מוגדר" אם מודול טוען את lib/mongodb בזמן build (אין שרת Mongo בשלב זה).
+ARG MONGODB_URI=mongodb://127.0.0.1:27017/next-docker-build
+ENV MONGODB_URI=$MONGODB_URI
+
+RUN test -n "$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" || (echo "::error NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY is empty — הגדר משתנה זה בהרצת build (ראה env.docker.example / .env.prod)" && exit 1)
 
 ENV NODE_ENV=production
 RUN npm run build

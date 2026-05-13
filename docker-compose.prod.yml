@@ -1,11 +1,12 @@
-# פרודקשן: Mongo + אפליקציה מתוך GHCR + Nginx כפרוקסי
+# פרודקשן: Mongo + אפליקציה מתוך GHCR (+ אופציה ל-build מקומי) + Nginx כפרוקסי
 # לא מפרסם Mongo לרשת — רק Nginx מאזין 80/443.
 #
-# APP_IMAGE — Docker image מהרישום (למשל מה־GHCR לאחר CI).
+# APP_IMAGE — אופציונלי ברירת מחדל: parent-guide:latest (אחרי `docker compose ... build`). ל־GHCR: APP_IMAGE ב־.env.prod
 #
-# הרצה בשרת (אחרי יצירת .env.prod):
-#   export APP_IMAGE=ghcr.io/owner/repo:latest
-#   docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+# הרצה בשרת (אחרי יצירת .env.prod עם מפתחות Clerk וכו'):
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml build && docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+# או משיכת תמונה מהרישום בלי build:
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml pull && docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
 
 services:
   mongo:
@@ -22,8 +23,14 @@ services:
       start_period: 25s
 
   app:
-    image: ${APP_IMAGE:?לא הוגדר APP_IMAGE לדוגמה ghcr.io/owner/repo:latest}
-    pull_policy: always
+    # אחרי `docker build -t parent-guide:latest .` ניתן להשאיר ברירת מחדל ללא שורה ב־.env.prod
+    image: ${APP_IMAGE:-parent-guide:latest}
+    pull_policy: missing
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     restart: unless-stopped
     expose:
       - "3000"
