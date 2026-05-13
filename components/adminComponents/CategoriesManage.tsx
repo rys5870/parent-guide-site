@@ -18,6 +18,11 @@ const CategoriesManage = () => {
       try {
         const res = await fetch("/api/categories");
         const data = await res.json();
+        if (!Array.isArray(data)) {
+          console.error("תשובת /api/categories צפויה להיות מערך, התקבלה:", data);
+          setCategories([]);
+          return;
+        }
         setCategories(data);
       } catch (error) {
         console.error("שגיאה בטעינת קטגוריות:", error);
