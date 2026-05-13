@@ -1,0 +1,103 @@
+name: Deploy (שרת Docker + Mongo + Nginx)
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_deploy:
+        description: סמנו להפסיק פריסה (למשל בדיקה)
+        type: boolean
+        default: false
+        required: false
+  workflow_run:
+    workflows: ["CI / CD"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-vps-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_deploy != 'true')
+      ||
+      (github.event_name == 'workflow_run'
+      && github.event.workflow_run.conclusion == 'success'
+      && (github.event.workflow_run.head_branch == 'main'
+          || github.event.workflow_run.head_branch == 'master'))
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Image tag
+        run: |
+          echo "APP_IMAGE=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]'):latest" >> "$GITHUB_ENV"
+
+      - name: Sanity — secrets פריסה
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          if [ -z "$DEPLOY_HOST" ] || [ -z "$DEPLOY_USER" ] || [ -z "$DEPLOY_SSH_KEY" ]; then
+            echo "::error title=חסרים סודות::הוסיפו ב-GitHub: DEPLOY_HOST, DEPLOY_USER, DEPLOY_SSH_KEY"
+            exit 1
+          fi
+
+      - name: Sanity — סודות אפליקציה נדרשים לשרת
+        env:
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          PROD_SITE: ${{ secrets.PROD_NEXT_PUBLIC_SITE_URL }}
+          NPUB: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+        run: |
+          MISSING=0
+          if [ -z "$NPUB" ]; then echo "::error::חסר secret: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"; MISSING=1; fi
+          if [ -z "$CLERK_SECRET_KEY" ]; then echo "::error::חסר secret: CLERK_SECRET_KEY"; MISSING=1; fi
+          if [ -z "$PROD_SITE" ]; then echo "::error::חסר secret: PROD_NEXT_PUBLIC_SITE_URL (כתובת האתר בפרודקשן, כולל https://)"; MISSING=1; fi
+          if [ "$MISSING" -ne 0 ]; then exit 1; fi
+
+      - name: יצירת קבצי env לשרת
+        env:
+          MONGODB_URI: ${{ secrets.PROD_MONGODB_URI }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.PROD_NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET }}
+          APP_IMAGE_VALUE: ${{ env.APP_IMAGE }}
+        run: python3 scripts/write-deploy-env-files.py /tmp/stack.env /tmp/.env.prod
+
+      - name: SSH known_hosts + key
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Rsync → שרת
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_VPS_SSH_PORT }}
+          # אופציונלי: Variables → DEPLOY_REMOTE_DIR (נתיב מוחלט בשרת). ברירת מחדל: ~/parent-guide-site
+          DEPLOY_REMOTE_DIR: ${{ vars.DEPLOY_REMOTE_DIR }}
+        run: bash scripts/rsync-deploy-to-vps.sh
+
+      - name: הרצת Bootstrap מרוחק (Docker אם צריך + compose up)
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_VPS_SSH_PORT }}
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: bash scripts/gha-ssh-remote-compose.sh

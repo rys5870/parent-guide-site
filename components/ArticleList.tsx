@@ -17,7 +17,15 @@ type ArticleResponse = {
 };
 
 const SkeletonCard = () => (
-  <div className="w-[300px] h-60 bg-gray-200 rounded-xl animate-pulse" />
+  <div className="h-[22rem] w-full animate-pulse overflow-hidden rounded-[1.25rem] border border-myColor_pink/10 bg-white shadow-sm">
+    <div className="h-44 bg-gradient-to-l from-Color_pink/40 to-Color_orange/35" />
+    <div className="space-y-3 p-4">
+      <div className="h-4 w-2/3 rounded-full bg-gray-200" />
+      <div className="h-3 w-full rounded-full bg-gray-100" />
+      <div className="h-3 w-5/6 rounded-full bg-gray-100" />
+      <div className="mt-8 h-10 w-full rounded-2xl bg-gray-100" />
+    </div>
+  </div>
 );
 
 const ArticleList = ({
@@ -84,15 +92,15 @@ const ArticleList = ({
   const totalPages = Math.ceil(totalArticles / limit);
 
   return (
-   <div className="w-full flex flex-col items-center justify-center">
+   <div className="flex w-full flex-col items-center justify-center">
   {loading ? (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9 mt-10 pt-5 pb-5 w-full">
+    <div className="mt-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: limit }).map((_, i) => (
         <SkeletonCard key={i} />
       ))}
     </div>
   ) : articles.length > 0 ? (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9 mt-10 pt-5 pb-5 w-full">
+    <div className="mt-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {articles.map((article) => {
         const sections = Array.isArray(article.sections) ? article.sections : [];
         const readTime = calculateReadTimeFromSections(sections);
@@ -103,7 +111,7 @@ const ArticleList = ({
         const createdAt = article.date
           ? new Date(article.date).toLocaleDateString("he-IL")
           : "";
-        const imageUrl = article.image || "./default.png";
+        const imageUrl = article.image || "/default.png";
 
         return (
           <ArticleCard
@@ -120,27 +128,28 @@ const ArticleList = ({
       })}
     </div>
   ) : (
-    <div className="text-center text-gray-500 text-lg font-medium mt-10">
-      לא נמצאו מאמרים
+    <div className="mt-10 w-full rounded-[1.5rem] border border-dashed border-myColor_pink/25 bg-white/75 p-10 text-center shadow-sm backdrop-blur-sm">
+      <p className="text-lg font-extrabold text-myColor_red">לא נמצאו מאמרים</p>
+      <p className="mt-2 text-sm text-gray-600">נסו לבחור קטגוריה אחרת או לחזור לכל המאמרים.</p>
     </div>
   )}
 
   {!numToShow && totalPages > 1 && (
-    <div className="flex justify-center gap-4 mt-6">
+    <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
       <button
         disabled={page === 1}
         onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-        className="px-4 py-2 bg-pink-200 rounded disabled:opacity-50"
+        className="rounded-full border border-myColor_pink/20 bg-white px-5 py-2.5 font-bold text-myColor_red transition hover:bg-myColor_red hover:text-white disabled:cursor-not-allowed disabled:opacity-45"
       >
         הקודם
       </button>
-      <span className="text-sm text-gray-600">
+      <span className="rounded-full bg-white/70 px-4 py-2 text-sm font-semibold text-gray-600">
         עמוד {page} מתוך {totalPages}
       </span>
       <button
         disabled={page >= totalPages}
         onClick={() => setPage((prev) => prev + 1)}
-        className="px-4 py-2 bg-pink-200 rounded disabled:opacity-50"
+        className="rounded-full bg-myColor_red px-5 py-2.5 font-bold text-white shadow-md shadow-myColor_red/20 transition hover:bg-myColor_orange disabled:cursor-not-allowed disabled:opacity-45"
       >
         הבא
       </button>

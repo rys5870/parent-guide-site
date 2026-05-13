@@ -9,6 +9,7 @@ import { SubText, SubTitle } from "./ui/text";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { toast } from "react-toastify";
+import { contactDetails } from "@/constants/contact";
 
 // טיפוס לתגובה מהשרת
 type EmailResponse = {
@@ -40,29 +41,41 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-white border-t">
-      <Container>{/* <FooterTop /> */}</Container>
+    <footer className="relative overflow-hidden border-t border-myColor_pink/10 bg-white">
+      <div className="absolute inset-0 bg-gradient-to-br from-Color_pink/25 via-white to-Color_orange/30" aria-hidden />
 
-      <div className="bg-myColor_pink/10">
+      <div className="relative">
         <Container>
-          <div className="py-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-            <div>
-              <h4 className="text-lg font-semibold text-black mb-4">צור קשר</h4>
-              <p>📍 אברבנאל 123, בני ברק</p>
-              <p>📞 050-1234567</p>
-              <p>✉️ 1@dvoriravinski.co.il</p>
+          <div className="grid gap-8 py-10 md:grid-cols-3 md:py-14">
+            <div className="rounded-3xl border border-myColor_pink/10 bg-white/75 p-6 shadow-sm backdrop-blur-sm">
+              <h4 className="mb-4 text-lg font-extrabold text-gray-900">צור קשר</h4>
+              <div className="space-y-2 text-sm text-gray-700">
+                <p>{contactDetails.address}</p>
+                <p>
+                  <a className="font-semibold text-myColor_red hover:underline" href={contactDetails.phoneHref}>
+                    {contactDetails.phoneLabel}
+                  </a>
+                </p>
+                <p>
+                  <a className="font-semibold text-myColor_red hover:underline" href={contactDetails.emailHref}>
+                    {contactDetails.email}
+                  </a>
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-lg font-semibold text-black mb-4">
+            <div className="rounded-3xl border border-myColor_pink/10 bg-white/75 p-6 shadow-sm backdrop-blur-sm">
+              <h4 className="mb-4 text-lg font-extrabold text-gray-900">
                 שעות פעילות
               </h4>
-              <p>ראשון - חמישי: 10:00 - 19:00</p>
-              <p>שישי: סגור</p>
+              <div className="space-y-2 text-sm text-gray-700">
+                {contactDetails.hours.map((hour) => (
+                  <p key={hour}>{hour}</p>
+                ))}
+              </div>
             </div>
 
             {/* ניוזלטר */}
-            <div className="space-y-4">
+            <div className="space-y-4 rounded-3xl border border-myColor_pink/10 bg-white/85 p-6 shadow-sm backdrop-blur-sm">
               <SubTitle>ניוזלטר</SubTitle>
               <SubText>
                 הצטרפו לניוזלטר שלנו וקבלו כלים, טיפים והשראה להורות מחוברת,
@@ -78,21 +91,21 @@ const Footer: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <Button type="submit" className="w-full">
-                  Subscribe
+                <Button type="submit" className="w-full rounded-full bg-myColor_red text-white hover:bg-myColor_orange">
+                  הצטרפות
                 </Button>
               </form>
             </div>
           </div>
-          <div className="flex flex-col mt-3 text-center items-center text-sm text-gray-400">
+          <div className="flex flex-col items-center gap-3 border-t border-myColor_pink/10 py-6 text-center text-sm text-gray-500">
             <SubText>חפשו אותי ב...</SubText>
             <SocialMedia
               className="text-darkColor/60"
-              iconClassName="border-darkColor/60 hover-shop_dark_green hover:text-shop_dark_green"
-              tooltipClassName="bg-darkColor text-white"
+              iconClassName="border-myColor_pink/20"
+              tooltipClassName="bg-myColor_red text-white"
             />
           </div>
-          <div className="pb-4 text-center text-sm text-gray-700">
+          <div className="pb-6 text-center text-sm text-gray-700">
             © כל הזכויות שמורות לדבורי רבינסקי 2025
           </div>
         </Container>

@@ -11,16 +11,16 @@ const HeaderAuth = dynamic(() => import("./HeaderAuth"), { ssr: false });
 
 const Header = () => {
   return (
-    <header className="bg-white py-5 border-b border-b-black/20">
-      <Container className="flex items-center justify-between text-lightColor">
-        <div className="w-auto md:w-1/3 flex items-center gap-2.5 justify-start md:gap-0">
+    <header className="sticky top-0 z-40 border-b border-myColor_pink/10 bg-white/88 py-2 shadow-sm shadow-myColor_pink/5 backdrop-blur-xl md:py-2.5">
+      <Container className="flex items-center justify-between gap-2 text-lightColor md:gap-4">
+        <div className="flex w-auto items-center justify-start gap-2 md:w-1/4">
           <MobilMenu />
-          <Logo logoSrc={"/logo.webp"} />
+          <Logo logoSrc={"/logo.webp"} className="h-[40px] w-[132px] sm:h-[46px] sm:w-[156px] md:h-[52px] md:w-[184px]" />
         </div>
 
         <HeaderMenu />
 
-        <div className="w-auto md:w-1/3 flex items-center justify-end gap-8 p-1">
+        <div className="flex w-auto items-center justify-end gap-3 md:w-1/4">
           <HeaderAuth />
         </div>
       </Container>

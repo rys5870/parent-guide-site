@@ -8,11 +8,11 @@ const ChildrenContextBlock = ({
   icon?: React.ReactNode;
 }) => {
   return (
-    <div className="h-full flex flex-col items-center justify-center space-y-4 p-6 bg-white rounded-4xl border-4 border-t-myColor_orange border-r-myColor_pink border-b-myColor_red border-l-pink-400 shadow-md text-center">
+    <div className="flex h-full flex-col items-center justify-center space-y-3 rounded-[1.25rem] border border-myColor_pink/10 bg-gradient-to-b from-white to-[#fff8fb]/85 p-4 text-center shadow-md shadow-myColor_pink/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-lg md:p-5">
       
       {/* אייקון בראש הכרטיס */}
       {icon && (
-        <div className="text-5xl text-pink-500">
+        <div className="text-4xl text-myColor_pink drop-shadow-sm">
           {icon}
         </div>
       )}

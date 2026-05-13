@@ -1,6 +1,5 @@
 import Contact from "@/components/Contact";
-
-
+import PageBackdrop from "@/components/PageBackdrop";
 import React from "react";
 
 export const metadata = {
@@ -11,11 +10,10 @@ export const metadata = {
 
 const page = () => {
   return (
-    <>
-    
-      <Contact/>
-      {/* <ContentStyle /> */}
-    </>
+    <main className="relative min-h-screen overflow-x-hidden">
+      <PageBackdrop />
+      <Contact />
+    </main>
   );
 };
 

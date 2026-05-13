@@ -1,9 +1,7 @@
 import {
   Facebook,
   Instagram,
-  Linkedin,
   Mail,
-  Twitter,
   Youtube,
 } from "lucide-react";
 import React from "react";
@@ -68,7 +66,10 @@ const SocialMedia = ({
                 rel="noopener noreferrer"
                 title={`מעבר ל-${item.title}`}
                 aria-label={`מעבר לעמוד ${item.title}`}
-                className={cn("p-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400", iconClassName)}
+                className={cn(
+                  "inline-flex size-10 items-center justify-center rounded-full border border-myColor_pink/20 bg-white/70 text-myColor_red transition hover:-translate-y-0.5 hover:bg-myColor_red hover:text-white focus:outline-none focus:ring-2 focus:ring-myColor_pink/35",
+                  iconClassName
+                )}
               >
                 <span role="img" aria-hidden="true">
                   {item.icon}

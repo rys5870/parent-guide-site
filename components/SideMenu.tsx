@@ -25,36 +25,46 @@ const filteredLinks = useFilteredLinks(user, isLoaded);
 
   return (
     <div
-      className={`fixed inset-y-0 h-screen left-0 z-50 
-        bg-myColor_red text-white/80 shadow-xl transition-transform duration-300 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      className={`fixed inset-0 z-50 md:hidden ${
+        isOpen ? "pointer-events-auto" : "pointer-events-none"
+      }`}
     >
+      <button
+        type="button"
+        aria-label="סגירת תפריט"
+        onClick={onClose}
+        className={`absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
+      />
       <div
         ref={sidebarRef}
-        className="min-w-72 max-w-96 bg-gradient-to-l from-Color_red to-Color_pink h-screen p-10
-        border-r border-myColor_red flex flex-col gap-6"
+        className={`relative mr-auto flex h-screen w-[min(22rem,86vw)] flex-col gap-8 overflow-y-auto border-r border-white/50 bg-[#b9152d] bg-gradient-to-br from-[#9f1239] via-[#be185d] to-[#c2410c] p-6 text-white shadow-2xl shadow-black/35 transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div className="flex items-center justify-between gap-5">
           <button
+            type="button"
+            aria-label="סגירת תפריט"
             onClick={onClose}
-            className="hover:text-myColor_red transition-colors"
+            className="inline-flex size-10 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white hover:text-myColor_red"
           >
             <X />
           </button>
-          <div className="bg-amber-50 rounded-2xl">
-            <Logo logoSrc="/logo.webp" className="text-white" />
+          <div className="rounded-2xl bg-white/95 p-1 shadow-lg">
+            <Logo logoSrc="/logo.webp" className="h-[50px] w-[170px]" />
           </div>
         </div>
 
-        <nav className="flex flex-col space-y-3.5 font-semibold tracking-wide">
+        <nav className="flex flex-col gap-2 text-base font-bold tracking-wide">
           {filteredLinks.map((item, index) => (
             <Link
               key={index}
               href={item.href}
               onClick={onClose}
-              className={`hover:text-myColor_red transition-colors ${
-                pathname === item.href ? "text-white" : ""
+              className={`rounded-2xl px-4 py-3 transition-colors hover:bg-white hover:text-myColor_red ${
+                pathname === item.href ? "bg-white text-myColor_red shadow-md" : "bg-black/12 text-white shadow-sm"
               }`}
             >
               {item.title}
@@ -62,7 +72,14 @@ const filteredLinks = useFilteredLinks(user, isLoaded);
           ))}
         </nav>
 
-        <SocialMedia />
+        <div className="mt-auto rounded-2xl bg-black/18 p-4 shadow-inner">
+          <p className="mb-3 text-sm font-semibold text-white">אפשר למצוא אותי גם כאן</p>
+          <SocialMedia
+            className="gap-2"
+            iconClassName="border-white/30 bg-white/10 text-white hover:bg-white hover:text-myColor_red"
+            tooltipClassName="bg-white text-myColor_red"
+          />
+        </div>
       </div>
     </div>
   );

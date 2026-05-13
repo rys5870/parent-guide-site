@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import PodcastVideo from "./PodcastVideo";
-import Container from "./Container";
 import PodcastPreviewModal from "./PodcastPreviewModal";
 import axios from "axios";
 
@@ -61,22 +60,46 @@ const Podcasts = () => {
   };
 
   return (
-    <div>
-      <Container>
-        <div className="flex flex-col items-center justify-center">
-          {loading && <p className="mt-5 text-gray-500">טוען פודקאסטים...</p>}
+    <div className="w-full rounded-[1.5rem] border border-myColor_pink/15 bg-white/82 p-4 shadow-[0_18px_55px_-34px_rgba(205,36,103,0.32)] backdrop-blur-md md:p-6">
+      <div className="mb-5 border-b border-myColor_pink/10 pb-4 text-right">
+        <p className="text-sm font-bold text-myColor_red">להאזנה בזמן שלך</p>
+        <h2 className="text-xl font-extrabold tracking-tight text-gray-900 md:text-2xl">
+          פרקים אחרונים
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-gray-600 md:text-base">
+          שיחות קצרות ומעשיות על דפוסים, קשר, גבולות וריפוי ההורות.
+        </p>
+      </div>
 
-          <div className="max-w-300 flex flex-wrap justify-center gap-9 p-5 mt-10 pt-10">
-            {podcasts.map((podcast) => (
-              <PodcastVideo
-                key={podcast._id}
-                data={podcast}
-                onClick={() => handlePodcastClick(podcast)}
-              />
-            ))}
-          </div>
+      {loading ? (
+        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <div key={index} className="h-72 animate-pulse rounded-[1.25rem] border border-myColor_pink/10 bg-white shadow-sm">
+              <div className="h-44 rounded-t-[1.25rem] bg-gradient-to-l from-Color_pink/40 to-Color_orange/35" />
+              <div className="space-y-3 p-5">
+                <div className="h-4 w-2/3 rounded-full bg-gray-200" />
+                <div className="h-3 w-full rounded-full bg-gray-100" />
+                <div className="h-3 w-1/2 rounded-full bg-gray-100" />
+              </div>
+            </div>
+          ))}
         </div>
-      </Container>
+      ) : podcasts.length > 0 ? (
+        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {podcasts.map((podcast) => (
+            <PodcastVideo
+              key={podcast._id}
+              data={podcast}
+              onClick={() => handlePodcastClick(podcast)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-[1.5rem] border border-dashed border-myColor_pink/25 bg-white/75 p-10 text-center">
+          <p className="text-lg font-extrabold text-myColor_red">עדיין אין פודקאסטים להצגה</p>
+          <p className="mt-2 text-sm text-gray-600">כאן יופיעו הפרקים החדשים ברגע שיעלו לאתר.</p>
+        </div>
+      )}
 
       {selectedPodcast && (
         <PodcastPreviewModal

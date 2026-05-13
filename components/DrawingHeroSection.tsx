@@ -3,27 +3,20 @@ import React from 'react';
 
 const DrawingHeroSection: React.FC = () => {
   return (
-    <section className="relative overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 py-20 text-center relative z-10">
-        <h1 className="text-4xl md:text-5xl font-bold text-pink-600">
+    <section className="relative z-10 overflow-hidden">
+      <div className="mx-auto max-w-4xl px-4 py-6 text-center md:px-6 md:py-9">
+        <div className="relative overflow-hidden rounded-[1.5rem] border border-myColor_pink/15 bg-white/82 px-4 py-7 shadow-[0_18px_55px_-34px_rgba(205,36,103,0.32)] backdrop-blur-md md:px-8 md:py-9">
+          <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-Color_orange/30 blur-3xl" aria-hidden />
+          <div className="absolute -bottom-16 -left-12 h-40 w-40 rounded-full bg-Color_pink/35 blur-3xl" aria-hidden />
+        <p className="relative text-xs font-bold text-myColor_red md:text-sm">פענוח ציורים</p>
+        <h1 className="relative mt-2 text-3xl font-extrabold tracking-tight text-gray-900 md:text-4xl">
           שלחו ציורי ילדים למנחת הורים
         </h1>
-        <p className="mt-4 text-lg text-gray-600">
+        <p className="relative mx-auto mt-3 max-w-2xl text-sm leading-7 text-gray-600 md:text-base">
           באמצעות הציורים ניתן להבין עולמות פנימיים, רגשות וחוויות. מוזמנים לשתף את הציורים כאן.
         </p>
+        </div>
       </div>
-
-      {/* רקע SVG */}
-      <svg
-        className="absolute top-0 left-5 w-full h-full opacity-20"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <circle cx="200" cy="15" r="120" fill="#FFB366" />
-        <circle cx="500" cy="200" r="180" fill="#FF9F7A" />
-        <circle cx="1000" cy="120" r="140" fill="#fda4af" />
-           <circle cx="1500" cy="12" r="140" fill="#FFB8A3" />
-      </svg>
     </section>
   );
 };

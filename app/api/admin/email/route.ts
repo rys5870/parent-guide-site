@@ -17,9 +17,11 @@ export async function POST(request: Request) {
   await EmailModel.create(emailData);
   return NextResponse.json({ success: true, msg: "הכתובת מייל נשמרה בהצלחה" });
 }
-export async function GET() {
+export async function GET(request: NextRequest) {
   await ConnectDB();
-  const emails = await EmailModel.find({});
+  const activeOnly = request.nextUrl.searchParams.get("activeOnly") === "1";
+  const filter = activeOnly ? { isDelete: { $ne: true } } : {};
+  const emails = await EmailModel.find(filter).sort({ date: -1 }).lean();
   return NextResponse.json({ success: true, emails });
 }
 export async function DELETE(request: NextRequest) {

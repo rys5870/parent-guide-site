@@ -1,40 +1,46 @@
 import React from "react";
 import SocialMedia from "./SocialMedia";
+import { contactDetails } from "@/constants/contact";
 
 const ContactInfo = () => {
   return (
-    <aside className="lg:col-span-1  bg-[#fffaf8] p-6 rounded-lg shadow flex flex-col gap-4">
-      <h4 className="text-lg font-bold text-gray-800">פרטי קשר</h4>
-      <div className="text-gray-600 text-sm">
-        <p className="font-medium">דבורי רבינסקי — מדריכת הורים</p>
+    <aside className="flex flex-col gap-4 rounded-[1.5rem] border border-myColor_pink/15 bg-white/86 p-4 shadow-lg shadow-myColor_pink/10 backdrop-blur-md md:p-5 lg:col-span-1">
+      <div>
+        <p className="text-xs font-bold text-myColor_red md:text-sm">פרטי קשר</p>
+        <h4 className="mt-1 text-lg font-extrabold text-gray-900">
+          {contactDetails.name} — {contactDetails.role}
+        </h4>
+      </div>
+      <div className="space-y-3 text-sm text-gray-700">
         <p>
           טלפון:{" "}
-          <a href="tel:+972501234567" className="text-pink-600 hover:underline">
-            050-1234567
+          <a href={contactDetails.phoneHref} className="font-bold text-myColor_red hover:underline">
+            {contactDetails.phoneLabel}
           </a>
         </p>
         <p>
           אימייל:{" "}
-          <a href="mailto:hello@example.com" className="text-pink-600 hover:underline">
-            hello@example.com
+          <a href={contactDetails.emailHref} className="font-bold text-myColor_red hover:underline">
+            {contactDetails.email}
           </a>
         </p>
       </div>
 
-      <div className="pt-2 border-t border-gray-100">
+      <div className="border-t border-myColor_pink/10 pt-3">
         <p className="text-sm text-gray-600">כתובת:</p>
-        <p className="text-sm font-medium">רח&apos אברבנאל 123, בני ברק</p>
+        <p className="text-sm font-bold text-gray-800">{contactDetails.address}</p>
       </div>
 
-      <div className="pt-2 border-t border-gray-100">
+      <div className="border-t border-myColor_pink/10 pt-3">
         <p className="text-sm text-gray-600">שעות פעילות:</p>
-        <ul className="text-sm">
-          <li>ב׳–ה׳ 09:00–17:00</li>
-          <li>יום ו׳ — לפי תיאום</li>
+        <ul className="mt-2 space-y-1 text-sm text-gray-800">
+          {contactDetails.hours.map((hour) => (
+            <li key={hour}>{hour}</li>
+          ))}
         </ul>
       </div>
 
-      <div className="pt-2 border-t border-gray-100">
+      <div className="border-t border-myColor_pink/10 pt-3">
         <p className="text-sm text-gray-600">עקבו ברשתות:</p>
         <div className="flex gap-3 mt-2">
           <SocialMedia />

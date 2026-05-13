@@ -53,27 +53,27 @@ export default function DrawingForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[color:var(--color-myColor_orange)] via-[color:var(--color-myColor_pink)] to-white py-10 px-4">
-      <div className=" max-w-1/2 mx-auto bg-white rounded-3xl shadow-xl border border-pink-200 p-8">
+    <div className="relative z-10 px-4 pb-12">
+      <div className="mx-auto max-w-3xl rounded-[1.5rem] border border-myColor_pink/15 bg-white/88 p-4 shadow-[0_18px_55px_-34px_rgba(205,36,103,0.32)] backdrop-blur-md md:p-6">
         <form
           onSubmit={handleSubmit}
           role="form"
           aria-labelledby="form-title"
-          className="space-y-8"
+          className="space-y-5 md:space-y-6"
         >
-          <h1 id="form-title" className="text-3xl font-bold text-[color:var(--color-myColor_red)] text-center mb-2">
+          <h1 id="form-title" className="mb-2 text-center text-2xl font-extrabold text-myColor_red md:text-3xl">
             שליחת ציור לפענוח
           </h1>
-          <p id="form-description" className="text-center text-gray-600 mb-6">
+          <p id="form-description" className="mb-5 text-center text-sm leading-relaxed text-gray-600 md:text-base">
             מלאו את הפרטים ושלחו ציור לפענוח אישי על ידי מנחת הורים מוסמכת
           </p>
 
           {/* פרטי הילד */}
-          <section aria-labelledby="child-info">
-            <h2 id="child-info" className="text-xl font-semibold text-[color:var(--color-myColor_pink)] mb-4">
+          <section aria-labelledby="child-info" className="rounded-[1.25rem] border border-myColor_pink/10 bg-[#fff8fb] p-4">
+            <h2 id="child-info" className="mb-3 text-lg font-extrabold text-myColor_pink">
               פרטי הילד
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="childName" className="block font-medium mb-1">שם הילד:</label>
                 <input
@@ -85,7 +85,7 @@ export default function DrawingForm() {
                   aria-required="true"
                   aria-label="שם הילד"
                   placeholder="לדוגמה: יוסי כהן"
-                  className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_pink)] transition"
+                  className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
                 />
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function DrawingForm() {
                   aria-required="true"
                   aria-label="גיל הילד"
                   placeholder="לדוגמה: 6"
-                  className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_pink)] transition"
+                  className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
                 />
               </div>
             </div>
@@ -117,7 +117,6 @@ export default function DrawingForm() {
                       checked={gender === "male"}
                       onChange={(e) => setGender(e.target.value)}
                       required
-                      aria-required="true"
                     />
                     <span>זכר</span>
                   </label>
@@ -138,8 +137,8 @@ export default function DrawingForm() {
           </section>
 
           {/* פרטי ההורה */}
-          <section aria-labelledby="parent-info">
-            <h2 id="parent-info" className="text-xl font-semibold text-[color:var(--color-myColor_pink)] mb-4">
+          <section aria-labelledby="parent-info" className="rounded-[1.25rem] border border-myColor_pink/10 bg-white p-4 shadow-sm">
+            <h2 id="parent-info" className="mb-3 text-lg font-extrabold text-myColor_pink">
               פרטי ההורה
             </h2>
 
@@ -154,7 +153,7 @@ export default function DrawingForm() {
                 aria-required="true"
                 aria-label="פרטי יצירת קשר"
                 placeholder="050-1234567 או email@example.com"
-                className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_pink)] transition"
+                className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
               />
             </div>
 
@@ -167,7 +166,7 @@ export default function DrawingForm() {
                 required
                 aria-required="true"
                 aria-label="מיקום הציור"
-                className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_pink)] transition"
+                className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
               >
                 <option value="">בחר</option>
                 <option value="home">בבית</option>
@@ -183,17 +182,17 @@ export default function DrawingForm() {
                 id="background"
                 value={background}
                 onChange={(e) => setBackground(e.target.value)}
-                rows={4}
+                rows={3}
                 aria-label="רקע אישי"
                 placeholder="ספר/י למה את/ה פונה ומה היית רוצה לדעת"
-                className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_orange)] transition"
+                className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
               />
             </div>
           </section>
 
           {/* פרטי הציור */}
-          <section aria-labelledby="drawing-info">
-            <h2 id="drawing-info" className="text-xl font-semibold text-[color:var(--color-myColor_pink)] mb-4">
+          <section aria-labelledby="drawing-info" className="rounded-[1.25rem] border border-myColor_pink/10 bg-[#fff8fb] p-4">
+            <h2 id="drawing-info" className="mb-3 text-lg font-extrabold text-myColor_pink">
               פרטי הציור
             </h2>
 
@@ -203,9 +202,9 @@ export default function DrawingForm() {
                 id="notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                rows={4}
+                rows={3}
                 aria-label="הערות על הציור"
-                className="w-full border border-myColor_red p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[color:var(--color-myColor_orange)] transition"
+                className="w-full rounded-xl border border-myColor_pink/30 bg-white p-2.5 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25 transition"
               />
                         </div>
 
@@ -218,7 +217,7 @@ export default function DrawingForm() {
             </div>
 
             <div className="mt-4">
-              <label htmlFor="consent" className="flex items-center gap-2">
+              <label htmlFor="consent" className="flex items-center gap-3 rounded-xl border border-myColor_pink/10 bg-white p-3">
                 <input
                   id="consent"
                   type="checkbox"
@@ -237,7 +236,7 @@ export default function DrawingForm() {
               type="submit"
               disabled={isSubmitting}
               aria-label="שלח את הטופס לפענוח"
-              className={`bg-[color:var(--color-myColor_red)] hover:bg-[color:var(--color-myColor_orange)] text-white px-6 py-3 rounded-full font-semibold transition-all duration-300 ease-in-out ${
+              className={`rounded-full bg-myColor_red px-8 py-3 font-bold text-white shadow-lg shadow-myColor_red/20 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-myColor_orange ${
                 isSubmitting ? "opacity-50 cursor-not-allowed animate-pulse" : ""
               }`}
             >

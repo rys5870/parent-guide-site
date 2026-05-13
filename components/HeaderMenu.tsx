@@ -5,34 +5,24 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 const HederMenu = () => {
-
-
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:inline-flex w-1/3 items-center gap-7 text-sm capitalize font-normal text-lightColor">
+    <nav className="hidden flex-1 items-center justify-center gap-1 rounded-full border border-myColor_pink/10 bg-white/70 p-1 text-sm font-semibold text-lightColor shadow-inner shadow-myColor_pink/5 md:inline-flex">
       {headerData.map((item) => (
         <Link
           key={item.title}
           href={item.href}
-          className={`hover:text-myColor_red font-bold hoverEffect relative group ${
-            pathname === item.href && "text-myColor_red"
+          className={`relative rounded-full px-3.5 py-2 transition-all duration-200 hover:bg-myColor_red/8 hover:text-myColor_red lg:px-4 ${
+            pathname === item.href
+              ? "bg-myColor_red text-white shadow-sm shadow-myColor_red/20 hover:bg-myColor_red hover:text-white"
+              : ""
           }`}
         >
           {item.title}
-          <span
-            className={`absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-myColor_red group-hover:w-12 hoverEffect group-hover:left-0 ${
-              pathname === item.href && "w-1/2"
-            }`}
-          />
-          <span
-            className={`absolute -bottom-0.5 right-1/2 w-0 h-0.5 bg-myColor_red group-hover:w-12 hoverEffect group-hover:right-0 ${
-              pathname === item.href && "w-1/2"
-            }`}
-          />
         </Link>
       ))}
-    </div>
+    </nav>
   );
 };
 

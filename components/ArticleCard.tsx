@@ -25,39 +25,41 @@ const ArticleCard: React.FC<ArticleProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg flex flex-col rounded-2xl shadow-md bg-white overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl">
+    <article className="group flex h-full w-full flex-col overflow-hidden rounded-[1.25rem] border border-myColor_pink/10 bg-white shadow-md shadow-myColor_pink/10 transition duration-300 hover:-translate-y-1 hover:border-myColor_orange/30 hover:shadow-xl hover:shadow-myColor_red/15">
 
       {/* פס צבעוני */}
-      <div className="h-2 bg-gradient-to-r from-pink-500 to-red-600" />
+      <div className="h-1.5 bg-gradient-to-l from-myColor_pink via-myColor_orange to-myColor_red" />
 
       {/* תמונה עם תג נושא */}
-      <div className="relative w-full h-64 md:h-72 lg:h-80">
-        <p className="absolute top-2 left-2 px-3 py-1 bg-myColor_orange/80 rounded-full text-white text-sm font-semibold z-10">
+      <div className="relative h-44 w-full overflow-hidden md:h-52">
+        <p className="absolute right-3 top-3 z-10 rounded-full border border-myColor_pink/15 bg-white/90 px-3 py-1 text-xs font-bold text-myColor_red shadow-sm backdrop-blur-sm">
           {topic}
         </p>
         <Image
           src={imageUrl}
           alt={title}
           fill
-          className="object-cover"
-          priority
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition duration-500 group-hover:scale-105"
         />
       </div>
 
       {/* תוכן */}
-      <div className="p-2 flex flex-col">
-        <div className="flex flex-col gap-1">
-          <h2 className="text-lg md:text-xl font-bold text-myColor_red">{title}</h2>
-          <p className="h-[100px] text-gray-700 leading-6 text-sm md:text-base line-clamp-4">{content}</p>
+      <div className="flex flex-1 flex-col bg-gradient-to-b from-white to-[#fff8fb]/80 p-4">
+        <div className="flex flex-1 flex-col gap-3">
+          <h2 className="line-clamp-2 text-base font-extrabold leading-snug text-gray-900 transition group-hover:text-myColor_red md:text-lg">
+            {title}
+          </h2>
+          <p className="line-clamp-3 text-sm leading-6 text-gray-600">{content}</p>
         </div>
 
         {/* זמן קריאה ותאריך */}
-        <div className="flex justify-between items-center text-gray-500 text-xs md:text-sm pt-2">
-          <div className="flex items-center">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-myColor_pink/10 pt-3 text-xs text-gray-500">
+          <div className="flex items-center gap-1.5">
             <IoMdTime className="text-lg" />
             <span>{readTime}</span>
           </div>
-          <div className="flex items-center ">
+          <div className="flex items-center gap-1.5">
             <FaRegCalendarAlt className="text-lg" />
             <span>
               {createdAt?
@@ -71,13 +73,13 @@ const ArticleCard: React.FC<ArticleProps> = ({
         <Link
           href={`/articles/${id}`}
           aria-label={`לקרוא את המאמר: ${title}`}
-          className="mt-3 p-2 inline-flex items-center justify-center text-myColor_red font-bold text-sm md:text-base hover:bg-myColor_pink/20 px-3 py-1 rounded-xl transition-colors"
+          className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-myColor_red/8 px-4 py-2.5 text-sm font-extrabold text-myColor_red transition-all hover:bg-myColor_red hover:text-white"
         >
           לקריאת המאמר
           <TbHandMove className="text-xl" />
         </Link>
       </div>
-    </div>
+    </article>
   );
 };
 

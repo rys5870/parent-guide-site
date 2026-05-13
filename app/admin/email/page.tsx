@@ -1,13 +1,10 @@
-import EmailList from '@/components/adminComponents/EmailList'
-import Container from '@/components/Container'
-import React from 'react'
+import NewsletterEmailAdminPage from "@/components/adminComponents/NewsletterEmailAdminPage";
+import Container from "@/components/Container";
 
-function page() {
+export default function AdminEmailPage() {
   return (
     <Container>
-        <EmailList/>
+      <NewsletterEmailAdminPage />
     </Container>
-  )
+  );
 }
-
-export default page

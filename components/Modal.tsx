@@ -6,9 +6,16 @@ type ModalProps = {
   isOpen: boolean;
   children: ReactNode;
   onClose: () => void;
+  /** מחליפים רוחב/גובה מקסימלי לתצוגה מקדימה וכדומה */
+  panelClassName?: string;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, children, onClose }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  children,
+  onClose,
+  panelClassName,
+}) => {
   const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -31,7 +38,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, children, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-md sm:max-w-xl md:max-w-2xl relative overflow-y-auto max-h-[90vh]"
+        className={
+          panelClassName ??
+          "bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-md sm:max-w-xl md:max-w-2xl relative overflow-y-auto max-h-[90vh]"
+        }
         onClick={(e) => e.stopPropagation()}
       >
         <button

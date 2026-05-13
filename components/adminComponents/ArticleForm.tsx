@@ -121,6 +121,36 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
     setSections(prev => prev.filter((_, i) => i !== index));
   };
 
+  const duplicateSection = (index: number) => {
+    setSections(prev => {
+      const sectionToDuplicate = prev[index];
+
+      if (!sectionToDuplicate) {
+        return prev;
+      }
+
+      return [
+        ...prev.slice(0, index + 1),
+        { ...sectionToDuplicate, title: `${sectionToDuplicate.title ?? ''} - עותק`.trim() },
+        ...prev.slice(index + 1),
+      ];
+    });
+  };
+
+  const moveSection = (index: number, direction: -1 | 1) => {
+    setSections(prev => {
+      const nextIndex = index + direction;
+
+      if (nextIndex < 0 || nextIndex >= prev.length) {
+        return prev;
+      }
+
+      const next = [...prev];
+      [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
+      return next;
+    });
+  };
+
   const handleAddCategory = (newCat: Category) => {
     setCategory(newCat);
     setAddCategory(false);
@@ -215,6 +245,11 @@ const ArticleForm: React.FC<ArticleFormProps> = ({
             section={section}
             onChange={updateSection}
             onRemove={removeSection}
+            onDuplicate={duplicateSection}
+            onMoveUp={(sectionIndex) => moveSection(sectionIndex, -1)}
+            onMoveDown={(sectionIndex) => moveSection(sectionIndex, 1)}
+            canMoveUp={index > 0}
+            canMoveDown={index < sections.length - 1}
             mode={mode}
           />
         ))}

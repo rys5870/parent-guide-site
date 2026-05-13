@@ -91,11 +91,15 @@ const ContentForm = () => {
       <form
         onSubmit={onSubmitHandler}
         role="form"
-        className="relative z-10 w-full  bg-[#fffaf8] rounded-3xl p-10 space-y-6"
+        className="relative z-10 w-full space-y-4 rounded-[1.5rem] border border-myColor_pink/15 bg-white/86 p-4 shadow-lg shadow-myColor_pink/10 backdrop-blur-md md:space-y-5 md:p-6"
       >
+        <div className="border-b border-myColor_pink/10 pb-4">
+          <p className="text-xs font-bold text-myColor_red md:text-sm">נשמח לשמוע ממך</p>
+          <h3 className="mt-1 text-xl font-extrabold text-gray-900 md:text-2xl">השאירו פרטים ונחזור אליכם</h3>
+        </div>
        
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div>
             <label
               htmlFor="name"
@@ -112,7 +116,7 @@ const ContentForm = () => {
               value={userData.name}
               onChange={handleChange}
               required
-              className="w-full rounded-full border-[#cd2467] focus:ring-[#cd2467] bg-white"
+              className="w-full rounded-xl border-myColor_pink/30 bg-white px-3.5 py-2.5 focus:border-myColor_red focus:ring-myColor_pink/25"
             />
           </div>
           <div>
@@ -131,7 +135,7 @@ const ContentForm = () => {
               value={userData.email}
               onChange={handleChange}
               required
-              className="w-full rounded-full border-[#cd2467] focus:ring-[#cd2467] bg-white"
+              className="w-full rounded-xl border-myColor_pink/30 bg-white px-3.5 py-2.5 focus:border-myColor_red focus:ring-myColor_pink/25"
             />
           </div>
           <div>
@@ -150,7 +154,7 @@ const ContentForm = () => {
               value={userData.phone}
               onChange={handleChange}
               required
-              className="w-full rounded-full border-[#cd2467] focus:ring-[#cd2467] bg-white text-right"
+              className="w-full rounded-xl border-myColor_pink/30 bg-white px-3.5 py-2.5 text-right focus:border-myColor_red focus:ring-myColor_pink/25"
               pattern="[0-9]*"
               inputMode="numeric"
             />
@@ -168,10 +172,10 @@ const ContentForm = () => {
             id="message"
             name="message"
             aria-label="תוכן הפנייה"
-            rows={4}
+            rows={3}
             value={userData.message}
             onChange={handleChange}
-            className="w-full rounded-xl border-[#cd2467] p-4 focus:outline-none focus:ring-2 focus:ring-[#d32035] bg-white"
+            className="w-full rounded-xl border border-myColor_pink/30 bg-white p-3 focus:outline-none focus:ring-2 focus:ring-myColor_pink/25"
             required
             placeholder="תוכן הפנייה"
           />
@@ -182,7 +186,7 @@ const ContentForm = () => {
           disabled={isSubmitting}
           aria-busy={isSubmitting}
           aria-label="שלח את הטופס"
-          className="w-full bg-gradient-to-r text-white font-bold py-3 rounded-full hover:opacity-90 transition-all flex items-center justify-center gap-2"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-myColor_red py-2.5 font-bold text-white shadow-md shadow-myColor_red/20 transition-all hover:-translate-y-0.5 hover:bg-myColor_orange disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? (
             <>

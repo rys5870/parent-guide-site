@@ -1,13 +1,14 @@
 import React from "react";
+import { contactDetails } from "@/constants/contact";
 
 const LocationMap = () => {
   return (
-    <section className="mt-8 bg-white p-6 rounded-lg shadow">
-      <h3 className="text-xl font-bold text-gray-800">מיקום</h3>
-      <p className="text-sm text-gray-600 mt-1">
-        הכתובת שלי: אברבנאל 123, בני ברק.
+    <section className="rounded-[1.5rem] border border-myColor_pink/15 bg-white/82 p-4 shadow-lg shadow-myColor_pink/10 backdrop-blur-md md:p-5">
+      <h3 className="text-xl font-extrabold text-gray-900 md:text-2xl">מיקום</h3>
+      <p className="mt-2 text-sm text-gray-600">
+        הכתובת שלי: {contactDetails.address}.
       </p>
-      <div className="mt-4 w-full h-56 rounded-lg overflow-hidden border border-gray-100">
+      <div className="mt-4 h-52 w-full overflow-hidden rounded-2xl border border-myColor_pink/10 md:h-64">
         <iframe
           title="מפת אברבנאל 123 בני ברק"
           src="https://www.google.com/maps?q=אברבנאל+123,+בני+ברק&output=embed"

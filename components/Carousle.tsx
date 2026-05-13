@@ -27,6 +27,10 @@ export default function ParentTestimonialCarousel() {
       .catch((err) => console.error("שגיאה בשליפת תגובות:", err));
   }, []);
 
+  if (testimonials.length === 0) {
+    return null;
+  }
+
   return (
     <div className="relative py-16 bg-[#f9f9f9] overflow-hidden">
       <div className="absolute inset-0 z-0">

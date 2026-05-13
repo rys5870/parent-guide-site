@@ -13,7 +13,7 @@ export default function HeaderAuth() {
       {/* משתמש לא מחובר */}
       <SignedOut>
         <SignInButton mode="modal">
-          <button className="px-4 py-2 rounded-lg bg-myColor_red text-white hover:bg-myColor_orange hover:text-white transition">
+          <button className="rounded-full bg-myColor_red px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-myColor_red/20 transition hover:-translate-y-0.5 hover:bg-myColor_orange hover:text-white">
             התחבר
           </button>
         </SignInButton>

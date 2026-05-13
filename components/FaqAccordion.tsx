@@ -8,9 +8,9 @@ import {
 
 const FaqAccordion = () => {
   return (
-    <section className="my-8 bg-white p-6 rounded-lg shadow">
-      <h3 className="text-xl font-bold mb-4">שאלות נפוצות</h3>
-      <Accordion type="single" collapsible className="w-full">
+    <section className="rounded-[1.5rem] border border-myColor_pink/15 bg-white/82 p-4 shadow-lg shadow-myColor_pink/10 backdrop-blur-md md:p-5">
+      <h3 className="mb-3 text-xl font-extrabold text-gray-900 md:text-2xl">שאלות נפוצות</h3>
+      <Accordion type="single" collapsible className="w-full divide-y divide-myColor_pink/10">
         <AccordionItem value="question-1">
           <AccordionTrigger>מה ההליך של מפגש ראשון?</AccordionTrigger>
           <AccordionContent>

@@ -4,12 +4,12 @@ export const headerData = [
   { title: "אודות", href: "/about" ,roles: ["user", "admin", "guest"] },
 
   { title: "מאמרים", href: "/articles" ,roles: ["user", "admin", "guest"] },
-   { title: "פוקדסטים", href: "/podcast" ,roles: ["user", "admin", "guest"] },
+   { title: "פודקאסטים", href: "/podcast" ,roles: ["user", "admin", "guest"] },
+   { title: "קורסים", href: "/courses" ,roles: ["user", "admin", "guest"] },
 
   { title: "צרו קשר", href: "/contact" ,roles: ["user", "admin", "guest"] },
    { title: "פיענוח ציורים", href: "/drawing" ,roles: ["user", "admin", "guest"] },
-
-
+   { title: "הלמידה שלי", href: "/learn" ,roles: ["user", "admin"] },
 ];
 export const quickLinksData = [
   { title: "קצת עלי", href: "/about" },
