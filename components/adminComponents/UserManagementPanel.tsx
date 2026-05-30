@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useUser, useAuth, UserButton, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { useUser, useAuth, UserButton, Show } from "@clerk/nextjs";
 
 const UserManagementPanel: React.FC = () => {
   const { user } = useUser();
@@ -10,7 +10,7 @@ const UserManagementPanel: React.FC = () => {
     <div className="p-6 bg-gray-100 rounded-xl shadow-md max-w-md mx-auto mt-10">
       <h2 className="text-xl font-bold mb-4">ניהול משתמשים</h2>
 
-      <SignedIn>
+      <Show when="signed-in">
         <div className="space-y-3">
           <div>👤 <strong>{user?.fullName}</strong></div>
           <div>📧 {user?.primaryEmailAddress?.emailAddress}</div>
@@ -25,11 +25,11 @@ const UserManagementPanel: React.FC = () => {
             התנתקות
           </button>
         </div>
-      </SignedIn>
+      </Show>
 
-      <SignedOut>
+      <Show when="signed-out">
         <div className="text-gray-600">אינך מחובר. אנא התחבר כדי לנהל משתמשים.</div>
-      </SignedOut>
+      </Show>
     </div>
   );
 };

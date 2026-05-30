@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { Show, SignInButton } from "@clerk/nextjs";
 import Container from "@/components/Container";
 import {
   completionPercentForCourse,
@@ -34,7 +34,7 @@ export default function LearnHomePage() {
               הקורסים ששויכו לך — פתחו ישר מהשיעור הראשון ועקבו אחרי ההתקדמות.
             </p>
           </div>
-        <SignedOut>
+        <Show when="signed-out">
           <p className="text-gray-600">
             התחברו כדי לראות קורסים ששויכו אליכם.
           </p>
@@ -46,10 +46,10 @@ export default function LearnHomePage() {
               התחברות
             </button>
           </SignInButton>
-        </SignedOut>
-        <SignedIn>
+        </Show>
+        <Show when="signed-in">
           <MyCourseList />
-        </SignedIn>
+        </Show>
         </div>
       </Container>
     </div>
