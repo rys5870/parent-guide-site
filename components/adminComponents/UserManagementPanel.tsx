@@ -16,7 +16,7 @@ const UserManagementPanel: React.FC = () => {
           <div>📧 {user?.primaryEmailAddress?.emailAddress}</div>
           <div>🆔 {user?.id}</div>
 
-          <UserButton afterSignOutUrl="/" />
+          <UserButton />
 
           <button
             onClick={() => signOut()}

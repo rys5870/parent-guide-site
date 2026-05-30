@@ -1,12 +1,13 @@
-import { clerkClient } from "@clerk/express";
+import { clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { userId, banned } = await req.json();
 
   try {
-    await clerkClient.users.updateUser(userId, {
-      publicMetadata: { banned }, 
+    const client = await clerkClient();
+    await client.users.updateUser(userId, {
+      publicMetadata: { banned },
     });
 
     return NextResponse.json({ success: true });

@@ -1,37 +1,34 @@
-import { clerkClient } from "@clerk/express";
+import { clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import type { User } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
+    const client = await clerkClient();
     const daysBack = 7;
     const dailyCounts: Record<string, number> = {};
 
-    // נבנה מפת ימים עם ספירה אפסית לפי UTC
     for (let i = 0; i < daysBack; i++) {
       const date = new Date();
       date.setUTCDate(date.getUTCDate() - i);
       date.setUTCHours(0, 0, 0, 0);
-      const key = date.toISOString().split("T")[0]; // YYYY-MM-DD
+      const key = date.toISOString().split("T")[0];
       dailyCounts[key] = 0;
     }
 
-    // נביא את כל המשתמשים עם פאגינציה
-let allUsers: User[] = [];
+    const allUsers: { createdAt: number }[] = [];
     let offset = 0;
     const limit = 100;
 
     while (true) {
-      const response = await clerkClient.users.getUserList({ limit, offset });
+      const response = await client.users.getUserList({ limit, offset });
       const users = response.data;
 
-      allUsers = allUsers.concat(users);
+      allUsers.push(...users);
 
       if (users.length < limit) break;
       offset += limit;
     }
 
-    // נעדכן את הספירה לפי תאריך ההרשמה (UTC)
     allUsers.forEach((user) => {
       const createdAt = new Date(user.createdAt);
       createdAt.setUTCHours(0, 0, 0, 0);
@@ -41,7 +38,6 @@ let allUsers: User[] = [];
       }
     });
 
-    // נחשב כמה נרשמו היום לפי UTC
     const todayUTC = new Date();
     todayUTC.setUTCHours(0, 0, 0, 0);
 
